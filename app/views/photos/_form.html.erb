@@ -1,6 +1,6 @@
-<%= form_with(model: photo) do |form| %>
+<%= form_with(model: photo, class: "needs-validation", novalidate: true) do |form| %>
   <% if photo.errors.any? %>
-    <div style="color: red">
+    <div class="alert alert-danger">
       <h2><%= pluralize(photo.errors.count, "error") %> prohibited this photo from being saved:</h2>
 
       <ul>
@@ -11,17 +11,22 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :caption, style: "display: block" %>
-    <%= form.text_field :caption %>
+  <div class="mb-3">
+    <%= form.label :caption, class: "form-label" %>
+    <%= form.text_field :caption, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
+  <div class="mb-3">
+    <%= form.label :user_id, class: "form-label" %>
+    <%= form.text_field :user_id, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.label :image %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Create", class: "btn btn-primary" %>
   </div>
 <% end %>
