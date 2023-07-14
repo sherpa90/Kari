@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.1.3"
 
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.6"
 
@@ -72,3 +73,9 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
+
+
+
+gem "figaro", "~> 1.2"
+
+gem "aws-sdk-s3", "~> 1.130"

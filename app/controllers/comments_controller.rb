@@ -22,16 +22,14 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
-    @comment = Comment.new(comment_params)
+    @photo = Photo.find(params[:photo_id])
+    @comment = @photo.comments.build(comment_params)
+    @comment.user = current_user
 
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
-        format.json { render :show, status: :created, location: @comment }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    if @comment.save
+      redirect_to @photo, notice: "Comment created successfully."
+    else
+      redirect_to @photo, alert: "Failed to create comment."
     end
   end
 
@@ -65,7 +63,9 @@ class CommentsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
+    private
+
     def comment_params
-      params.require(:comment).permit(:content, :user_id, :photo_id)
+      params.require(:comment).permit(:content)
     end
-end
+  end

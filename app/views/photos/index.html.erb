@@ -1,14 +1,40 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Photos</h1>
 
 <div id="photos">
-  <% @photos.each do |photo| %>
-    <%= render photo %>
-    <p>
-      <%= link_to "Show this photo", photo %>
-    </p>
-  <% end %>
+  <div class="container">
+    <div class="row">
+      <% @photos.each_slice(3) do |group| %>
+        <div class="row justify-content-center">
+          <% group.each do |photo| %>
+            <div class="col-md-4">
+              <div class="card mb-4">
+                <%= image_tag photo.image, class: "card-img-top", alt: "Photo" %>
+                <div class="card-body text-center">
+                  <h5 class="card-title"><%= photo.caption %></h5>
+                  <p class="card-text">Comments:</p>
+                  <% photo.comments.each do |comment| %>
+                    <div class="comment">
+                      <% if comment.user.profile_picture.attached? %>
+                        <%= image_tag comment.user.profile_picture, class: "rounded-circle", style: "width: 50px; height: 50px;" %>
+                      <% else %>
+                        <%= image_tag "default_profile_picture.png", class: "rounded-circle", style: "width: 50px; height: 50px;" %>
+                      <% end %>
+                      <p><strong><%= comment.user.email %>:</strong> <%= comment.content %></p>
+                    </div>
+                  <% end %>
+                  <%= form_with(model: Comment.new, url: photo_comments_path(photo), class: "mt-3") do |form| %>
+                    <%= form.hidden_field :photo_id, value: photo.id %>
+                    <div class="form-group">
+                      <%= form.label :content %>
+                      <%= form.text_area :content, rows: 3, class: "form-control" %>
+                    </div>
+                    <%= form.submit "Comentar", class: "btn btn-primary mt-3" %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New photo", new_photo_path %>
