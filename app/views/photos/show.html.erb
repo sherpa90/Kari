@@ -1,0 +1,7 @@
+# app/views/photos/show.html.erb
+<% @photo.comments.each do |comment| %>
+  <div class="comment">
+    <%= image_tag url_for(comment.user.profile_picture), class: 'profile-picture' if comment.user.profile_picture.attached? %>
+    <p><%= comment.content %></p>
+  </div>
+<% end %>
