@@ -40,9 +40,7 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon
-  config.aws_credentials = {
-    region: 'us-east-1'
-  }
+  
    
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
